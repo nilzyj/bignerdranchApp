@@ -1,7 +1,9 @@
 package com.bignerdranch.android.geoquiz;
 
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,9 +12,13 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 public class QuizActivity extends AppCompatActivity {
+    private static final String TAG = "QuizActivity";
+    private static final String KEY_INDEX = "index";//新增键值对的键
+
     private Button mTrueButton;
     private Button mFalseButton;
     private Button mNextButton;
+    private Button mPreviousButton;
     private TextView mQuestionTextView;
 
     private Question[] mQuestionBank = new Question[]{
@@ -26,6 +32,7 @@ public class QuizActivity extends AppCompatActivity {
     private int mCurrentIndex = 0;//问题序号
 
     private void updateQuestion(){
+        //Log.d(TAG, "Updating question text for question #" + mCurrentIndex, new Exception());
         int question = mQuestionBank[mCurrentIndex].getTextResId();//获取资源ID
         mQuestionTextView.setText(question);
     }
@@ -81,6 +88,39 @@ public class QuizActivity extends AppCompatActivity {
                 updateQuestion();
             }
         });
+
+        mPreviousButton = (Button) findViewById(R.id.previous_button);
+        mPreviousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCurrentIndex =  (mCurrentIndex - 1);
+                if (mCurrentIndex < 0){
+                    mCurrentIndex = mQuestionBank.length - 1;
+                }
+                updateQuestion();
+            }
+        });
+
+        mQuestionTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                updateQuestion();
+            }
+        });
+
+        if (savedInstanceState != null){
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX,0);
+        }
+
         updateQuestion();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        //保存mCurrentIndex，避免设备配置改变，销毁activity，重置数值
+        savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
     }
 }
