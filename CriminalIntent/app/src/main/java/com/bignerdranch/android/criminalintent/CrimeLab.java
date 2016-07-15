@@ -26,12 +26,16 @@ public class CrimeLab {
         //创建List用于保存Crime对象
         mCrimes = new ArrayList<>();
         //数组中存入Crime对象
-        for (int i = 0; i < 100; i++) {
-            Crime crime = new Crime();
-            crime.setTitle("Crime #" + i);
-            crime.setSolved(i % 2 == 0);
-            mCrimes.add(crime);
-        }
+//        for (int i = 0; i < 100; i++) {
+//            Crime crime = new Crime();
+//            crime.setTitle("Crime #" + i);
+//            crime.setSolved(i % 2 == 0);
+//            mCrimes.add(crime);
+//        }
+    }
+
+    public void addCrime(Crime c) {
+        mCrimes.add(c);
     }
 
     //返回数组列表
