@@ -13,9 +13,25 @@ public class Crime {
     private Date mDate;
     private boolean mSolved;
 
-    public Crime(){
+    public String getSuspect() {
+        return mSuspect;
+    }
+
+    public void setSuspect(String suspect) {
+        mSuspect = suspect;
+    }
+
+    private String mSuspect;
+
+    public Crime() {
+        this(UUID.randomUUID());
         //Generate unique identifier
-        mId = UUID.randomUUID();
+//        mId = UUID.randomUUID();
+//        mDate = new Date();
+    }
+
+    public Crime(UUID id) {
+        mId = id;
         mDate = new Date();
     }
 
@@ -45,5 +61,9 @@ public class Crime {
 
     public void setSolved(boolean solved) {
         mSolved = solved;
+    }
+
+    public String getPhotoFilename() {
+        return "IMG_" + getId().toString() + ".jpg";
     }
 }

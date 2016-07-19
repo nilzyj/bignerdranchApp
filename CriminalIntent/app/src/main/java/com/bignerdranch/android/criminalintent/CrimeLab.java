@@ -2,12 +2,24 @@ package com.bignerdranch.android.criminalintent;
 
 import android.content.ContentValues;
 import android.content.Context;
+<<<<<<< HEAD
 import android.database.sqlite.SQLiteDatabase;
 
 import com.bignerdranch.android.criminalintent.database.CrimeBaseHelper;
 import com.bignerdranch.android.criminalintent.database.CrimeDbSchema;
 import com.bignerdranch.android.criminalintent.database.CrimeDbSchema.CrimeTable;
+=======
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
+>>>>>>> 4f534b88b909081a6687fe18321ede3770203066
 
+import com.bignerdranch.android.criminalintent.database.CrimeBaseHelper;
+import com.bignerdranch.android.criminalintent.database.CrimeCursorWrapper;
+import com.bignerdranch.android.criminalintent.database.CrimeDbSchema;
+import com.bignerdranch.android.criminalintent.database.CrimeDbSchema.CrimeTable;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -35,7 +47,11 @@ public class CrimeLab {
         mDatabase = new CrimeBaseHelper(mContext)
                 .getWritableDatabase();
         //创建List用于保存Crime对象
+<<<<<<< HEAD
         //mCrimes = new ArrayList<>();
+=======
+//        mCrimes = new ArrayList<>();
+>>>>>>> 4f534b88b909081a6687fe18321ede3770203066
         //数组中存入Crime对象
 //        for (int i = 0; i < 100; i++) {
 //            Crime crime = new Crime();
@@ -49,13 +65,35 @@ public class CrimeLab {
         //mCrimes.add(c);
         ContentValues values = getContentValues(c);
 
+<<<<<<< HEAD
         mDatabase.insert(CrimeDbSchema.CrimeTable.NAME, null, values);
+=======
+        mDatabase.insert(CrimeTable.NAME, null, values);
+>>>>>>> 4f534b88b909081a6687fe18321ede3770203066
     }
 
     //返回数组列表
     public List<Crime> getCrimes() {
         //return mCrimes;
+<<<<<<< HEAD
         return new ArrayList<>();
+=======
+        //return new ArrayList<>();
+        List<Crime> crimes = new ArrayList<>();
+
+        CrimeCursorWrapper cursor = queryCrimes(null, null);
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                crimes.add(cursor.getCrime());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return crimes;
+>>>>>>> 4f534b88b909081a6687fe18321ede3770203066
     }
 
     //返回带有指定ID的Crime对象
@@ -65,7 +103,71 @@ public class CrimeLab {
 //                return crime;
 //            }
 //        }
+<<<<<<< HEAD
         return null;
+=======
+        //return null;
+        CrimeCursorWrapper cursor = queryCrimes(
+                CrimeTable.Cols.UUID + " = ?",
+                new String[] { id.toString() }
+        );
+
+        try {
+            if (cursor.getCount() == 0) {
+                return null;
+            }
+            cursor.moveToFirst();
+            return cursor.getCrime();
+        } finally {
+            cursor.close();
+        }
+    }
+
+    //定位图片文件
+    public File getPhotoFile(Crime crime) {
+        File externalFilesDir = mContext
+                .getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+        if (externalFilesDir == null) {
+            return null;
+        }
+
+        return new File(externalFilesDir, crime.getPhotoFilename());
+    }
+
+    public void updateCrime(Crime crime) {
+        String uuidString = crime.getId().toString();
+        ContentValues values = getContentValues(crime);
+
+        mDatabase.update(CrimeTable.NAME, values,
+                CrimeTable.Cols.UUID + " = ?",
+                new String[] {uuidString});
+    }
+
+    private static ContentValues getContentValues(Crime crime) {
+        ContentValues values = new ContentValues();
+        values.put(CrimeTable.Cols.UUID, crime.getId().toString());
+        values.put(CrimeTable.Cols.TITLE, crime.getTitle());
+        values.put(CrimeTable.Cols.DATE, crime.getDate().getTime());
+        values.put(CrimeTable.Cols.SOLVED, crime.isSolved() ? 1 : 0);
+        values.put(CrimeTable.Cols.SUSPECT, crime.getSuspect());
+        return values;
+    }
+
+    //private Cursor queryCrimes(String whereClause, String[] whereArgs) {
+    private CrimeCursorWrapper queryCrimes(String whereClause, String[] whereArgs) {
+        Cursor cursor = mDatabase.query(
+                CrimeTable.NAME,
+                null,
+                whereClause,
+                whereArgs,
+                null, //groupBy
+                null, //having
+                null //orderBy
+        );
+        //return cursor;
+        return new CrimeCursorWrapper(cursor);
+>>>>>>> 4f534b88b909081a6687fe18321ede3770203066
     }
 
     public void updateCrime(Crime crime) {
