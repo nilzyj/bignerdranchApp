@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 
 import java.util.UUID;
 
+//托管支持库Fragment的Activity
 public class CrimeActivity extends SingleFragmentActivity {
 
 //    @Override
