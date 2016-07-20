@@ -21,6 +21,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/7/14.
  */
+//控制类
 public class CrimeListFragment extends Fragment {
 
     private static final String SAVED_SUBTITLE_VISIBLE = "subtitle";
@@ -40,8 +41,10 @@ public class CrimeListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_crime_list, container, false);
 
+        //RecyclerView类的任务就是回收再利用以及定位屏幕上的TextView视图,实际上定位被委托给了LayoutManager
         mCrimeRecyclerView = (RecyclerView) view
                 .findViewById(R.id.crime_recycler_view);
+        //LayoutManager负责在屏幕上定位列表项和定义屏幕滚动行为
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         if (savedInstanceState != null) {
@@ -127,6 +130,7 @@ public class CrimeListFragment extends Fragment {
         updateSubtilte();
     }
 
+    //ViewHolder:容纳View视图
     private class CrimeHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener{
         //public TextView mTitleTextView;
@@ -164,6 +168,8 @@ public class CrimeListFragment extends Fragment {
         }
     }
 
+    //Adapter是个控制器对象,从模型层获取数据,然后提供给RecyclerView显示
+    //Adapter负责:创建必要的ViewHolder,绑定(使用模型数据填充视图)ViewHolder至模型层数据
     private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
         private List<Crime> mCrimes;
 
@@ -180,6 +186,7 @@ public class CrimeListFragment extends Fragment {
         }
 
         //把ViewHolder的View视图和模型层数据绑定起来
+        //int position-ViewHolder和列表项在数据集中的索引位置
         @Override
         public void onBindViewHolder(CrimeHolder holder, int position) {
             Crime crime = mCrimes.get(position);

@@ -19,6 +19,7 @@ public class CrimeActivity extends SingleFragmentActivity {
 //        //获取Fragment
 //        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
 //
+          //判断fragment是否已经存在于队列中
 //        if (fragment == null) {
 //            fragment = new CrimeFragment();
 //            //创建并提交一个fragment事务

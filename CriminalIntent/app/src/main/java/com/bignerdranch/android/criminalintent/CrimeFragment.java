@@ -31,7 +31,7 @@ import java.util.UUID;
 /**
  * Created by Administrator on 2016/7/14.
  */
-//与模型与视图对象交互的控制器
+//与模型与视图对象交互的控制器,用于显示特定crime的明细信息,并在用户修改这些信息后立即进行更新
 public class CrimeFragment extends Fragment {
     private static final String ARG_CRIME_ID = "crime_id";
     private static final String DIALOG_DATE = "DialogDate";
@@ -50,6 +50,7 @@ public class CrimeFragment extends Fragment {
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
 
+    //完成fragment实例及bundle对象的创建,将argument放入bundle红,最后再附加给fragment
     public static CrimeFragment newInstance(UUID crimeId) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_CRIME_ID,crimeId);
@@ -59,6 +60,7 @@ public class CrimeFragment extends Fragment {
         return fragment;
     }
 
+    //Fragment的生命周期方法必须是公共方法,托管fragment的activity要调用他们
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,9 +152,12 @@ public class CrimeFragment extends Fragment {
         }
     }
 
+    //创建和配置fragmeng视图,LayoutInflater,ViewGroup是实例化布局的必要参数,Bundle用于存储恢复数据
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //传入布局的资源ID生成fragment的视图,第二个参数是视图的父视图,第三个参数告知布局生成器是否将
+        //生成的视图添加给父视图
         View v = inflater.inflate(R.layout.fragment_crime, container, false);
 
         mTitleField = (EditText)v.findViewById(R.id.crime_title);
@@ -163,6 +168,7 @@ public class CrimeFragment extends Fragment {
 
             }
 
+            //CharSequence s:用户输入
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mCrime.setTitle(s.toString());

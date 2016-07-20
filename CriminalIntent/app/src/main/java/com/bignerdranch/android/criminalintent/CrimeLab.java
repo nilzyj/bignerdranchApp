@@ -19,7 +19,9 @@ import java.util.UUID;
 /**
  * Created by Administrator on 2016/7/14.
  */
+//模型层
 //创建单例
+// 该对象是一个数据集中存储池,用来存储crime对象
 public class CrimeLab {
     private static CrimeLab sCrimeLab;
 

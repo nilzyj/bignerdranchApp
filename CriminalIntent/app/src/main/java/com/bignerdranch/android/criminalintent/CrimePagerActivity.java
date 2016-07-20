@@ -3,7 +3,6 @@ package com.bignerdranch.android.criminalintent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -31,7 +30,7 @@ public class CrimePagerActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crime_pager);
 
@@ -43,7 +42,8 @@ public class CrimePagerActivity extends AppCompatActivity {
         mCrimes = CrimeLab.get(this).getCrimes();
         //获取FragmentManager实例
         FragmentManager fragmentManager = getSupportFragmentManager();
-        //设置adapter为FragmentStatepagerAdapter的一个匿名实例
+        //设置adapter为FragmentStatePagerAdapter的一个匿名实例,FragmentStatePagerAdapter
+        //负责管理与ViewPage的对话并协同工作
         mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
             @Override
             public Fragment getItem(int position) {
