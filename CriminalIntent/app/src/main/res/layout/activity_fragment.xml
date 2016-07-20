@@ -1,3 +1,4 @@
+<!--容器视图,用于托管其他fragment-->
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragment_container"

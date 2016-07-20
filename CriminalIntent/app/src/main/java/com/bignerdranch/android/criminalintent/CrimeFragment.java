@@ -28,8 +28,6 @@ import java.io.File;
 import java.util.Date;
 import java.util.UUID;
 
-import javax.crypto.spec.IvParameterSpec;
-
 /**
  * Created by Administrator on 2016/7/14.
  */
@@ -70,14 +68,6 @@ public class CrimeFragment extends Fragment {
         UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime  = CrimeLab.get(getActivity()).getCrime(crimeId);
         mPhotoFile = CrimeLab.get(getActivity()).getPhotoFile(mCrime);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        CrimeLab.get(getActivity())
-                .updateCrime(mCrime);
     }
 
     @Override

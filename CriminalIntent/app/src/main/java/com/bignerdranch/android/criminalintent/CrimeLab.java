@@ -2,17 +2,9 @@ package com.bignerdranch.android.criminalintent;
 
 import android.content.ContentValues;
 import android.content.Context;
-<<<<<<< HEAD
-import android.database.sqlite.SQLiteDatabase;
-
-import com.bignerdranch.android.criminalintent.database.CrimeBaseHelper;
-import com.bignerdranch.android.criminalintent.database.CrimeDbSchema;
-import com.bignerdranch.android.criminalintent.database.CrimeDbSchema.CrimeTable;
-=======
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
->>>>>>> 4f534b88b909081a6687fe18321ede3770203066
 
 import com.bignerdranch.android.criminalintent.database.CrimeBaseHelper;
 import com.bignerdranch.android.criminalintent.database.CrimeCursorWrapper;
@@ -47,11 +39,8 @@ public class CrimeLab {
         mDatabase = new CrimeBaseHelper(mContext)
                 .getWritableDatabase();
         //创建List用于保存Crime对象
-<<<<<<< HEAD
         //mCrimes = new ArrayList<>();
-=======
 //        mCrimes = new ArrayList<>();
->>>>>>> 4f534b88b909081a6687fe18321ede3770203066
         //数组中存入Crime对象
 //        for (int i = 0; i < 100; i++) {
 //            Crime crime = new Crime();
@@ -64,23 +53,15 @@ public class CrimeLab {
     public void addCrime(Crime c) {
         //mCrimes.add(c);
         ContentValues values = getContentValues(c);
-
-<<<<<<< HEAD
         mDatabase.insert(CrimeDbSchema.CrimeTable.NAME, null, values);
-=======
         mDatabase.insert(CrimeTable.NAME, null, values);
->>>>>>> 4f534b88b909081a6687fe18321ede3770203066
     }
 
     //返回数组列表
     public List<Crime> getCrimes() {
         //return mCrimes;
-<<<<<<< HEAD
-        return new ArrayList<>();
-=======
         //return new ArrayList<>();
         List<Crime> crimes = new ArrayList<>();
-
         CrimeCursorWrapper cursor = queryCrimes(null, null);
 
         try {
@@ -93,7 +74,6 @@ public class CrimeLab {
             cursor.close();
         }
         return crimes;
->>>>>>> 4f534b88b909081a6687fe18321ede3770203066
     }
 
     //返回带有指定ID的Crime对象
@@ -103,9 +83,6 @@ public class CrimeLab {
 //                return crime;
 //            }
 //        }
-<<<<<<< HEAD
-        return null;
-=======
         //return null;
         CrimeCursorWrapper cursor = queryCrimes(
                 CrimeTable.Cols.UUID + " = ?",
@@ -167,25 +144,5 @@ public class CrimeLab {
         );
         //return cursor;
         return new CrimeCursorWrapper(cursor);
->>>>>>> 4f534b88b909081a6687fe18321ede3770203066
-    }
-
-    public void updateCrime(Crime crime) {
-        String uuidString = crime.getId().toString();
-        ContentValues values = getContentValues(crime);
-
-        mDatabase.update(CrimeTable.NAME, values,
-                CrimeTable.Cols.UUID + " = ?",
-                new String[] { uuidString });
-    }
-
-    private static ContentValues getContentValues(Crime crime) {
-        ContentValues values = new ContentValues();
-        values.put(CrimeTable.Cols.UUID, crime.getId().toString());
-        values.put(CrimeTable.Cols.TITLE, crime.getTitle());
-        values.put(CrimeTable.Cols.DATE, crime.getDate().getTime());
-        values.put(CrimeTable.Cols.SOLVED, crime.isSolved() ? 1 : 0);
-
-        return values;
     }
 }
