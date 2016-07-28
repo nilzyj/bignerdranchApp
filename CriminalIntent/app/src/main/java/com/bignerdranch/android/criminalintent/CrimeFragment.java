@@ -50,7 +50,7 @@ public class CrimeFragment extends Fragment {
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
 
-    //完成fragment实例及bundle对象的创建,将argument放入bundle红,最后再附加给fragment
+    //完成fragment实例及bundle对象的创建,将argument放入bundle中,最后再附加给fragment
     public static CrimeFragment newInstance(UUID crimeId) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_CRIME_ID,crimeId);
@@ -75,9 +75,7 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-
-        CrimeLab.get(getActivity())
-                .updateCrime(mCrime);
+        CrimeLab.get(getActivity()).updateCrime(mCrime);
     }
 
     @Override
@@ -86,8 +84,7 @@ public class CrimeFragment extends Fragment {
             return;
         }
         if (requestCode == REQUEST_DATE) {
-            Date date = (Date) data
-                    .getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mCrime.setDate(date);
             updateDate();
         } else if (requestCode == REQUEST_CONTACT && data !=null) {
@@ -128,8 +125,8 @@ public class CrimeFragment extends Fragment {
 
         String dateFormat = "EEE, MMM dd";
         String dateString = DateFormat.format(dateFormat, mCrime.getDate()).toString();
-
         String suspect = mCrime.getSuspect();
+
         if (suspect == null) {
             suspect = getString(R.string.crime_report_suspect);
         } else {
@@ -152,14 +149,24 @@ public class CrimeFragment extends Fragment {
         }
     }
 
-    //创建和配置fragmeng视图,LayoutInflater,ViewGroup是实例化布局的必要参数,Bundle用于存储恢复数据
+    /**
+     * 创建和配置fragmeng视图,LayoutInflater,ViewGroup是实例化布局的必要参数,Bundle用于存储恢复数据
+     * 该方法实例化fragment视图的布局,然后将实例化的View返回给托管activity
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //传入布局的资源ID生成fragment的视图,第二个参数是视图的父视图,第三个参数告知布局生成器是否将
-        //生成的视图添加给父视图
+        /**
+         * fragment的视图是直接通过调用LayoutInflater.inflate(...)方法并传入布局的资源ID生成的.
+         * 传入布局的资源ID生成fragment的视图,第二个参数是视图的父视图,第三个参数告知布局生成器是否将
+         * 生成的视图添加给父视图
+         */
+
         View v = inflater.inflate(R.layout.fragment_crime, container, false);
 
+        /**
+         * mTitleField:标题
+         */
         mTitleField = (EditText)v.findViewById(R.id.crime_title);
         mTitleField.setText(mCrime.getTitle());
         mTitleField.addTextChangedListener(new TextWatcher() {

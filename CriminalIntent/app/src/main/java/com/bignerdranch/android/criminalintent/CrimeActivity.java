@@ -8,7 +8,9 @@ import java.util.UUID;
 
 //托管支持库Fragment的Activity
 public class CrimeActivity extends SingleFragmentActivity {
-
+    /**
+     * FragmentManager类负责管理fragment并将它们的视图添加到activiy的视图层级结构中
+     */
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
@@ -22,7 +24,8 @@ public class CrimeActivity extends SingleFragmentActivity {
           //判断fragment是否已经存在于队列中
 //        if (fragment == null) {
 //            fragment = new CrimeFragment();
-//            //创建并提交一个fragment事务
+//            //创建并提交一个fragment事务,fragment事务用来添加.移除.附加.分离或替换fragment队列中的fragment
+//            //add()方法是整个事务的核心,第一个参数:容器视图资源ID,第二个参数:新创建的CrimeFragment
 //            fm.beginTransaction().add(R.id.fragment_container, fragment).commit();
 //        }
 //    }
