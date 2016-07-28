@@ -3,7 +3,7 @@ package com.bignerdranch.android.criminalintent.database;
 /**
  * Created by dim on 2016/7/15.
  */
-        //数据表字段
+//数据表字段
 public class CrimeDbSchema {
     public static final class CrimeTable {
         public static final String NAME = "crimes";
