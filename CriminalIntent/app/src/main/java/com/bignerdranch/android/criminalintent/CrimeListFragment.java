@@ -45,6 +45,7 @@ public class CrimeListFragment extends Fragment {
         mCrimeRecyclerView = (RecyclerView) view
                 .findViewById(R.id.crime_recycler_view);
         //LayoutManager负责在屏幕上定位列表项和定义屏幕滚动行为
+        //RecyclerView视图创建完成后,就立即转交给了LayoutManager对象
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         if (savedInstanceState != null) {
@@ -56,6 +57,7 @@ public class CrimeListFragment extends Fragment {
         return view;
     }
 
+    //从回退栈恢复时,刷新视图
     @Override
     public void onResume() {
         super.onResume();
@@ -95,14 +97,14 @@ public class CrimeListFragment extends Fragment {
             case R.id.menu_item_show_subtitle:
                 mSubtitleVisible = !mSubtitleVisible;
                 getActivity().invalidateOptionsMenu();
-                updateSubtilte();
+                updateSubtitle();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public void updateSubtilte() {
+    public void updateSubtitle() {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         int crimeCount = crimeLab.getCrimes().size();
         String subtitle = getString(R.string.subtitle_format, crimeCount);
@@ -124,10 +126,11 @@ public class CrimeListFragment extends Fragment {
             mCrimeRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.setCrimes(crimes);
+            //如果配置好mAdapter,则使用notifyDataSetChanged(),会使RecyclerView刷新全部的可见列表项
             mAdapter.notifyDataSetChanged();
         }
 
-        updateSubtilte();
+        updateSubtitle();
     }
 
     //ViewHolder:容纳View视图
@@ -143,6 +146,7 @@ public class CrimeListFragment extends Fragment {
             super(itemView);
             itemView.setOnClickListener(this);
 
+            //引用了用于显示crime标题的TextView视图
             //mTitleTextView = (TextView) itemView;
             mTitleTextView = (TextView) itemView.findViewById(R.id.list_item_crime_title_text_view);
             mDateTextView = (TextView) itemView.findViewById(R.id.list_item_crime_date_text_view);
@@ -161,6 +165,7 @@ public class CrimeListFragment extends Fragment {
 //            Toast.makeText(getActivity(),
 //                    mCrime.getTitle() + " clicked!", Toast.LENGTH_SHORT)
 //                    .show();
+            //从Fragment启动Activity
             //Intent intent = new Intent(getActivity(), CrimeActivity.class);
             //Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId());
             Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
@@ -177,7 +182,7 @@ public class CrimeListFragment extends Fragment {
             mCrimes = crimes;
         }
 
-        //需要新的View视图来显示列表项时调用
+        //需要新的View视图来显示列表项时调用,创建视图,并封装到ViewHolder中
         @Override
         public CrimeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
@@ -186,7 +191,7 @@ public class CrimeListFragment extends Fragment {
         }
 
         //把ViewHolder的View视图和模型层数据绑定起来
-        //int position-ViewHolder和列表项在数据集中的索引位置
+        //int position:ViewHolder和列表项在数据集中的索引位置
         @Override
         public void onBindViewHolder(CrimeHolder holder, int position) {
             Crime crime = mCrimes.get(position);

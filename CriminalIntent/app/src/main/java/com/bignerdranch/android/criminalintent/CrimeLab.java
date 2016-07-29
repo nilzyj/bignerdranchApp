@@ -19,8 +19,8 @@ import java.util.UUID;
 /**
  * Created by Administrator on 2016/7/14.
  */
-//模型层
-//创建单例
+// 模型层
+// 创建单例:需要创建一个带有私有构造方法及get()方法的类
 // 该对象是一个数据集中存储池,用来存储crime对象
 public class CrimeLab {
     private static CrimeLab sCrimeLab;

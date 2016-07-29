@@ -8,6 +8,7 @@ import java.util.UUID;
  */
 //模型层
 public class Crime {
+    //通用唯一识别码
     private UUID mId;
     private String mTitle;
     private Date mDate;
