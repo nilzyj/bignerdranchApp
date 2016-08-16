@@ -156,12 +156,12 @@ public class CrimeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         /**
          * fragment的视图是直接通过调用LayoutInflater.inflate(...)方法并传入布局的资源ID生成的.
          * 传入布局的资源ID生成fragment的视图,第二个参数是视图的父视图,第三个参数告知布局生成器是否将
          * 生成的视图添加给父视图
          */
-
         View v = inflater.inflate(R.layout.fragment_crime, container, false);
 
         /**
